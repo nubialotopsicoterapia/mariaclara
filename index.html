@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu espacio — María Clara</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #f5f0ea;
+      --bg2:         #ede7df;
+      --surface:     #ffffff;
+      --surface-2:   #faf7f3;
+      --surface-3:   #f0ebe3;
+      --accent:      #b5714a;
+      --accent-dim:  #8f5435;
+      --accent-soft: rgba(181,113,74,0.12);
+      --sage:        #6a9080;
+      --sage-dim:    #4f7062;
+      --sage-soft:   rgba(106,144,128,0.12);
+      --blue:        #6e8faa;
+      --blue-soft:   rgba(110,143,170,0.12);
+      --text:        #2c2218;
+      --text-soft:   #7a6a5e;
+      --text-mute:   #a89a90;
+      --border:      rgba(44,34,24,0.09);
+      --border-accent: rgba(181,113,74,0.25);
+      --border-sage:   rgba(106,144,128,0.25);
+      --border-blue:   rgba(110,143,170,0.25);
+      --radius:      18px;
+      --radius-sm:   12px;
+      --shadow:      0 2px 16px rgba(44,34,24,0.07);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 72px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 40% at 90% 5%, rgba(181,113,74,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 5% 90%, rgba(106,144,128,0.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; }
+    .screen.active {
+      display: block;
+      animation: fadeUp 0.3s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 48px 0 30px;
+      text-align: center;
+    }
+    .header-eyebrow {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 31px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .header h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .header-phrase {
+      background: var(--surface);
+      border: 1px solid var(--border-sage);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-soft);
+      line-height: 1.75;
+      max-width: 390px;
+      margin: 0 auto;
+      box-shadow: var(--shadow);
+    }
+
+    /* ── LABELS ── */
+    .label {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      margin-bottom: 12px;
+      padding: 0 2px;
+    }
+    .label.accent { color: var(--accent); }
+    .label.sage   { color: var(--sage); }
+    .label.blue   { color: var(--blue); }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--text);
+      margin-bottom: 9px;
+      line-height: 1.3;
+    }
+    .card-body {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.78;
+    }
+    .card-body p + p { margin-top: 10px; }
+    .card.accent-border { border-color: var(--border-accent); }
+    .card.sage-border   { border-color: var(--border-sage); }
+    .card.blue-border   { border-color: var(--border-blue); }
+
+    /* ── ALERTS ── */
+    .alert {
+      border-radius: var(--radius);
+      padding: 15px 18px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .alert-warm {
+      background: var(--accent-soft);
+      border: 1px solid var(--border-accent);
+      color: var(--accent-dim);
+    }
+    .alert-sage {
+      background: var(--sage-soft);
+      border: 1px solid var(--border-sage);
+      color: var(--sage-dim);
+    }
+    .alert-blue {
+      background: var(--blue-soft);
+      border: 1px solid var(--border-blue);
+      color: var(--blue);
+    }
+
+    /* ── OPTION BUTTONS ── */
+    .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .opt {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14.5px;
+      color: var(--text);
+      text-align: left;
+      line-height: 1.5;
+      transition: background 0.17s, border-color 0.17s, transform 0.13s, box-shadow 0.17s;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: var(--shadow);
+    }
+    .opt:hover {
+      background: var(--surface-2);
+      border-color: var(--border-accent);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(44,34,24,0.1);
+    }
+    .opt:active { transform: scale(0.98); }
+    .opt-icon { font-size: 19px; flex-shrink: 0; margin-top: 1px; }
+    .opt-sub {
+      display: block;
+      font-size: 12.5px;
+      color: var(--text-mute);
+      margin-top: 3px;
+      font-weight: 300;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-forward {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 10px;
+      transition: background 0.17s, transform 0.12s;
+    }
+    .btn-forward:hover { background: var(--accent-dim); }
+    .btn-forward:active { transform: scale(0.98); }
+
+    .btn-sage {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--sage);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 10px;
+      transition: background 0.17s, transform 0.12s;
+    }
+    .btn-sage:hover { background: var(--sage-dim); }
+    .btn-sage:active { transform: scale(0.98); }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-soft);
+      cursor: pointer;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-back:hover { background: var(--surface); color: var(--text); }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 6px;
+      padding-top: 36px;
+      line-height: 1.25;
+    }
+    .section-sub {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    /* ── FRASE ── */
+    .frase {
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.75;
+      padding: 14px 18px;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 14px 0;
+    }
+    .frase.sage {
+      border-left-color: var(--sage);
+      background: var(--sage-soft);
+    }
+    .frase.blue {
+      border-left-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    /* ── BREATHING ── */
+    .breath-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 0 22px;
+    }
+    .breath-ring {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      border: 2.5px solid var(--border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      color: var(--accent);
+      transition: transform 4s ease-in-out, background 0.5s;
+      transform: scale(1);
+    }
+    .breath-ring.expand {
+      transform: scale(1.35);
+      background: rgba(181,113,74,0.18);
+    }
+    .breath-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--text);
+      margin-top: 22px;
+    }
+    .breath-instr {
+      font-size: 13.5px;
+      color: var(--text-soft);
+      margin-top: 8px;
+      text-align: center;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+    .breath-counter {
+      font-size: 12px;
+      color: var(--text-mute);
+      margin-top: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── SCAN ITEMS ── */
+    .scan-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .scan-item:last-child { border-bottom: none; }
+    .scan-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .scan-num.sage {
+      background: var(--sage-soft);
+      color: var(--sage-dim);
+    }
+    .scan-text {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.7;
+      padding-top: 3px;
+    }
+    .scan-text strong { color: var(--text); font-weight: 500; }
+
+    /* ── SIGNAL ROWS ── */
+    .signal-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .signal-row:last-child { border-bottom: none; }
+    .signal-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .signal-text {
+      font-size: 14px;
+      color: var(--text-soft);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .signal-action {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      flex-shrink: 0;
+    }
+
+    /* ── VALUES ── */
+    .values-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+    .value-chip {
+      background: var(--surface);
+      border: 1px solid var(--border-sage);
+      border-radius: 40px;
+      padding: 8px 16px;
+      font-size: 13.5px;
+      color: var(--sage-dim);
+      font-weight: 400;
+    }
+
+    /* ── CHECKLIST ── */
+    .checklist { display: flex; flex-direction: column; gap: 0; }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-box {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border-sage);
+      background: var(--surface);
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+      font-size: 11px;
+      color: transparent;
+    }
+    .check-item.checked .check-box {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: white;
+    }
+    .check-item.checked .check-label { color: var(--text-mute); text-decoration: line-through; }
+    .check-label {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* ── COMPASSION STEPS ── */
+    .compassion-step {
+      background: var(--surface);
+      border: 1px solid var(--border-blue);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+    }
+    .compassion-step .step-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 7px;
+    }
+    .compassion-step .step-text {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.75;
+    }
+    .compassion-step .step-text em {
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* ── REFRAME CARDS ── */
+    .reframe {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 10px;
+    }
+    .reframe-from, .reframe-to {
+      flex: 1;
+      border-radius: var(--radius-sm);
+      padding: 13px 15px;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    .reframe-from {
+      background: rgba(181,113,74,0.07);
+      border: 1px solid var(--border-accent);
+      color: var(--text-soft);
+      font-style: italic;
+    }
+    .reframe-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--text-mute);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .reframe-to {
+      background: var(--sage-soft);
+      border: 1px solid var(--border-sage);
+      color: var(--sage-dim);
+      font-weight: 400;
+    }
+
+    /* ── DIARIO ── */
+    .diario-wrap { margin-bottom: 16px; }
+    .field-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      margin-bottom: 8px;
+    }
+    textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      resize: none;
+      min-height: 110px;
+      line-height: 1.7;
+      margin-bottom: 10px;
+      transition: border-color 0.15s;
+      box-shadow: var(--shadow);
+    }
+    textarea:focus { outline: none; border-color: var(--border-sage); }
+    textarea::placeholder { color: var(--text-mute); }
+    select {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-soft);
+      cursor: pointer;
+      appearance: none;
+      box-shadow: var(--shadow);
+    }
+    select:focus { outline: none; border-color: var(--border-sage); }
+
+    /* ── DIARY ENTRIES ── */
+    .diario-entry {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+    }
+    .entry-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .entry-date { font-size: 11.5px; color: var(--text-mute); }
+    .entry-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--sage);
+      background: var(--sage-soft);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .entry-text { font-size: 14px; color: var(--text-soft); line-height: 1.7; }
+    .entry-delete {
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: var(--text-mute);
+      cursor: pointer;
+      padding: 0 4px;
+      margin-left: 6px;
+      transition: color 0.15s;
+    }
+    .entry-delete:hover { color: var(--accent); }
+    .empty-state {
+      text-align: center;
+      color: var(--text-mute);
+      font-size: 13.5px;
+      padding: 28px 0;
+      line-height: 1.7;
+    }
+
+    /* ── TURISTA ── */
+    .turista-question {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+    }
+    .turista-q {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .turista-hint {
+      font-size: 13px;
+      color: var(--text-mute);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══════ S1: INICIO ═══════ -->
+  <div class="screen active" id="s1">
+    <div class="header">
+      <div class="header-eyebrow">Tu espacio</div>
+      <h1>Hola, <em>María Clara</em></h1>
+      <div class="header-phrase">
+        No tienes que saber exactamente por qué estás donde estás.<br>
+        Solo tienes que elegir desde dónde te mueves.
+      </div>
+    </div>
+
+    <div class="label sage">¿Qué necesitas ahora?</div>
+
+    <div class="options">
+      <button class="opt" onclick="show('s2')">
+        <span class="opt-icon">🌬️</span>
+        <div>
+          Necesito bajar la intensidad
+          <span class="opt-sub">Respiración guiada — para cuando todo se activa junto</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('s-tools')">
+        <span class="opt-icon">🧰</span>
+        <div>
+          Quiero explorar mis herramientas
+          <span class="opt-sub">Insomnio, modo turista, recibir, compasión...</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('s-valores')">
+        <span class="opt-icon">🧭</span>
+        <div>
+          Necesito reconectarme con mis valores
+          <span class="opt-sub">Tu brújula — para tomar decisiones desde lo que importa</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('s-diario')">
+        <span class="opt-icon">📓</span>
+        <div>
+          Quiero registrar algo
+          <span class="opt-sub">Notas para ti — o para llevar a sesión</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════ S2: RESPIRACIÓN ═══════ -->
+  <div class="screen" id="s2">
+    <div class="section-title">El volante es tuyo</div>
+    <div class="section-sub">Los pensamientos y las sensaciones son pasajeros en el carro. No tienen que callarse para que puedas conducir. Respira.</div>
+
+    <div class="breath-wrap">
+      <div class="breath-ring" id="bc">inhala</div>
+      <div class="breath-label" id="bl">Inhala</div>
+      <div class="breath-instr" id="bi">Sigue el ritmo. Todo lo que sientes puede estar ahí mientras respiras.</div>
+      <div class="breath-counter" id="bco">respiración 1 de 3</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Después de respirar</div>
+      <div class="card-body">
+        <p>Nota dónde estás. Qué ves, qué escuchas, qué sientes en el cuerpo.</p>
+        <p>No tienes que resolver nada ahora. Solo estar aquí un momento.</p>
+      </div>
+    </div>
+
+    <div class="frase sage">La ansiedad no es una señal de que algo está mal contigo. Es una señal de que tu sistema nervioso está trabajando. Puedes acompañarlo.</div>
+
+    <button class="btn-back" onclick="show('s1')">← Volver al inicio</button>
+  </div>
+
+  <!-- ═══════ S-TOOLS: MENÚ HERRAMIENTAS ═══════ -->
+  <div class="screen" id="s-tools">
+    <div class="section-title">Tus herramientas</div>
+    <div class="section-sub">Para usar cuando lo necesites, sin apuro.</div>
+
+    <div class="options">
+      <button class="opt" onclick="show('t1')">
+        <span class="opt-icon">🌙</span>
+        <div>
+          Cuando la noche se complica
+          <span class="opt-sub">El insomnio, los pensamientos nocturnos y tu rutina</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('t2')">
+        <span class="opt-icon">🌍</span>
+        <div>
+          Modo turista
+          <span class="opt-sub">Para explorar lo nuevo sin tener que saber el destino</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('t3')">
+        <span class="opt-icon">🤝</span>
+        <div>
+          Recibir sin ansiedad
+          <span class="opt-sub">Para cuando alguien quiere hacer algo por ti</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('t4')">
+        <span class="opt-icon">💙</span>
+        <div>
+          Ser más gentil contigo
+          <span class="opt-sub">Validación y compasión — para cuando te eres muy dura</span>
+        </div>
+      </button>
+      <button class="opt" onclick="show('t5')">
+        <span class="opt-icon">🌱</span>
+        <div>
+          Lo que ya funciona
+          <span class="opt-sub">Tus recursos reales — los que ya has usado</span>
+        </div>
+      </button>
+    </div>
+
+    <button class="btn-back" onclick="show('s1')">← Volver al inicio</button>
+  </div>
+
+  <!-- ═══════ T1: EL INSOMNIO ═══════ -->
+  <div class="screen" id="t1">
+    <div class="label">🌙 Cuando la noche se complica</div>
+
+    <div class="card accent-border">
+      <div class="card-title">La arena movediza del sueño</div>
+      <div class="card-body">
+        <p>Cuando estás en la cama y el sueño no llega, la mente empieza: <em>"¿Por qué no me duermo? ¿A qué hora será? ¿Cómo voy a estar mañana?"</em></p>
+        <p>Intentar forzar el sueño es como luchar en arena movediza — mientras más te esfuerzas, más te hundes.</p>
+        <p>El sueño no llega cuando lo perseguimos. Llega cuando dejamos de pelearlo.</p>
+      </div>
+    </div>
+
+    <div class="frase">Si la cabeza empieza a calcular — cuántas horas quedan, cómo te afectará mañana — nota ese pensamiento como un pasajero. No tienes que discutirle. Solo nombrarlo: <em>"ahí está el pensamiento de mañana."</em></div>
+
+    <div class="label sage" style="margin-top:8px;">Qué hacer si no llega el sueño</div>
+    <div class="card">
+      <div class="scan-item">
+        <div class="scan-num sage">1</div>
+        <div class="scan-text"><strong>Párate de la cama.</strong> Si llevas más de 20 minutos despierta y la cabeza está activa, levántate. La cama no es lugar para luchar.</div>
+      </div>
+      <div class="scan-item">
+        <div class="scan-num sage">2</div>
+        <div class="scan-text"><strong>Haz algo pausado.</strong> Leer (no pantallas), escuchar algo suave, respirar. Sin luz fuerte.</div>
+      </div>
+      <div class="scan-item">
+        <div class="scan-num sage">3</div>
+        <div class="scan-text"><strong>Vuelve cuando notes somnolencia.</strong> No antes — el cuerpo te avisa.</div>
+      </div>
+    </div>
+
+    <div class="label accent" style="margin-top:4px;">Tu rutina de noche — para revisar</div>
+    <div class="card" id="checklist-insomnio">
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">Irse a dormir a la misma hora cada noche</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">Sin pantallas en la media hora previa</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">El teléfono fuera de la cama</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">Aroma de lavanda — difusor o spray</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">Cena liviana — nada pesado en las últimas 2 horas</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">Un momento de relajación: respiración, estiramiento suave, o lo que te funcione</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-label">Sin scrollear en el teléfono justo antes de dormir</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frase sage">No tienes que dormir perfecto. Solo tienes que no pelear con el sueño.</div>
+
+    <button class="btn-back" onclick="show('s-tools')">← Volver</button>
+  </div>
+
+  <!-- ═══════ T2: MODO TURISTA ═══════ -->
+  <div class="screen" id="t2">
+    <div class="label">🌍 Modo turista</div>
+
+    <div class="card">
+      <div class="card-title">Explorar sin tener que saber el destino</div>
+      <div class="card-body">
+        <p>Cuando llegaste a Madrid por primera vez, no sabías exactamente cómo iba a ser. Ibas mirando, preguntando, descubriendo.</p>
+        <p>Hay situaciones en la vida donde ayuda volver a ese modo: el de quien llega con curiosidad, sin expectativas rígidas de cómo tiene que salir todo.</p>
+      </div>
+    </div>
+
+    <div class="alert-sage alert">
+      El modo turista no significa que no importa lo que pase. Significa que te das permiso de <strong>estar en la experiencia</strong> antes de evaluarla.
+    </div>
+
+    <div class="label accent" style="margin-top:4px;">Preguntas para entrar en modo turista</div>
+
+    <div class="turista-question">
+      <div class="turista-q">¿Qué estoy viendo realmente, sin filtros?</div>
+      <div class="turista-hint">Los hechos concretos — lo que pasó, no lo que temes que signifique</div>
+    </div>
+    <div class="turista-question">
+      <div class="turista-q">¿Qué me llama la atención aquí?</div>
+      <div class="turista-hint">Qué te gusta, qué no, qué te genera curiosidad genuina</div>
+    </div>
+    <div class="turista-question">
+      <div class="turista-q">¿Qué necesito para seguir explorando?</div>
+      <div class="turista-hint">Sin presión de decidir el resto del viaje desde el primer día</div>
+    </div>
+
+    <div class="frase">Una turista no evalúa la ciudad entera el primer día. Le da una vuelta, anota lo que le gustó, y vuelve mañana si quiere.</div>
+
+    <button class="btn-back" onclick="show('s-tools')">← Volver</button>
+  </div>
+
+  <!-- ═══════ T3: RECIBIR SIN ANSIEDAD ═══════ -->
+  <div class="screen" id="t3">
+    <div class="label">🤝 Recibir sin ansiedad</div>
+
+    <div class="card">
+      <div class="card-title">Cuando alguien quiere hacer algo por ti</div>
+      <div class="card-body">
+        <p>Te genera ansiedad que te paguen, que te cuiden, que te hagan un favor. No es raro — tiene historia.</p>
+        <p>Aprendiste muy temprano a no depender, a no necesitar. Y eso fue una forma de protegerte.</p>
+        <p>Pero hoy, recibir no significa que debes algo. No significa que eres carga. Significa que alguien elige darte.</p>
+      </div>
+    </div>
+
+    <div class="frase">No tienes que ganarte cada cosa que recibes. A veces las personas dan porque quieren, no porque tú se los hayas pedido o merecido de alguna forma especial.</div>
+
+    <div class="label sage" style="margin-top:4px;">Qué puedes hacer en ese momento</div>
+    <div class="card sage-border">
+      <div class="scan-item">
+        <div class="scan-num sage">1</div>
+        <div class="scan-text"><strong>Nota la incomodidad.</strong> Es normal que aparezca. No tienes que resolverla antes de recibir.</div>
+      </div>
+      <div class="scan-item">
+        <div class="scan-num sage">2</div>
+        <div class="scan-text"><strong>Deja que sea simple.</strong> Un "gracias" puede ser suficiente. No necesitas compensar de inmediato.</div>
+      </div>
+      <div class="scan-item">
+        <div class="scan-num sage">3</div>
+        <div class="scan-text"><strong>Pregúntate:</strong> ¿Hay algo en mis valores que me dice que recibir cuidado también es válido?</div>
+      </div>
+    </div>
+
+    <div class="alert-sage alert">
+      Que te cuiden no te hace menos autónoma. Al contrario — poder elegir cuándo recibir también es una forma de libertad.
+    </div>
+
+    <button class="btn-back" onclick="show('s-tools')">← Volver</button>
+  </div>
+
+  <!-- ═══════ T4: SER MÁS GENTIL CONTIGO ═══════ -->
+  <div class="screen" id="t4">
+    <div class="label blue">💙 Ser más gentil contigo</div>
+
+    <div class="card">
+      <div class="card-title">Lo que estás viviendo tiene sentido</div>
+      <div class="card-body">
+        <p>Estás en un país que no es el tuyo, buscando trabajo, saliendo del final de una relación, navegando la distancia con tu familia, conociendo personas nuevas.</p>
+        <p>Eso es mucho. No es una lista de problemas — es un proceso real, con peso real.</p>
+        <p>Que tu cabeza se active, que sientas malestar, que haya días difíciles — no significa que estás fallando. Significa que estás en medio de algo grande.</p>
+      </div>
+    </div>
+
+    <div class="frase blue">Cuando una dificultad aparece en medio de la migración, no es solo esa dificultad. Trae todo lo que ya venías cargando. Eso no te hace débil — te hace humana.</div>
+
+    <div class="label blue" style="margin-top:4px;">Lo que te dices vs. lo que le dirías a alguien que quieres</div>
+
+    <div class="reframe">
+      <div class="reframe-from">"Es mi culpa"</div>
+      <div class="reframe-arrow">→</div>
+      <div class="reframe-to">Estoy aprendiendo a moverme en terreno nuevo</div>
+    </div>
+    <div class="reframe">
+      <div class="reframe-from">"Me siento estancada"</div>
+      <div class="reframe-arrow">→</div>
+      <div class="reframe-to">Estoy en un momento de proceso — no de parálisis permanente</div>
+    </div>
+    <div class="reframe">
+      <div class="reframe-from">"No quiero ser una carga"</div>
+      <div class="reframe-arrow">→</div>
+      <div class="reframe-to">Necesitar apoyo no me hace menos — me hace honesta</div>
+    </div>
+    <div class="reframe">
+      <div class="reframe-from">"No sé si vale la pena"</div>
+      <div class="reframe-arrow">→</div>
+      <div class="reframe-to">Hoy no tengo claridad completa — y eso está bien por ahora</div>
+    </div>
+
+    <div class="label blue" style="margin-top:8px;">Una práctica breve — el observador</div>
+    <div class="compassion-step">
+      <div class="step-label">Paso 1 — Nota</div>
+      <div class="step-text">Nombra lo que estás sintiendo. <em>"Hay una parte de mí que se siente [palabra]."</em> No eres la sensación — la estás observando.</div>
+    </div>
+    <div class="compassion-step">
+      <div class="step-label">Paso 2 — Valida</div>
+      <div class="step-text">Pregúntate: <em>"¿Tiene sentido que sienta esto, dado todo lo que está pasando?"</em> Casi siempre la respuesta es sí.</div>
+    </div>
+    <div class="compassion-step">
+      <div class="step-label">Paso 3 — La pregunta clave</div>
+      <div class="step-text"><em>"¿Le diría esto que me estoy diciendo a alguien que quiero, que está pasando por lo mismo?"</em> Si la respuesta es no — puedes elegir cambiarlo.</div>
+    </div>
+
+    <div class="frase blue">Ser gentil contigo no es rendirse ni ignorar lo que sientes. Es darte el mismo trato que le darías a alguien que importa.</div>
+
+    <button class="btn-back" onclick="show('s-tools')">← Volver</button>
+  </div>
+
+  <!-- ═══════ T5: LO QUE YA FUNCIONA ═══════ -->
+  <div class="screen" id="t5">
+    <div class="label sage">🌱 Lo que ya sé que funciona</div>
+
+    <div class="card">
+      <div class="card-title">Tus recursos reales</div>
+      <div class="card-body">Estas no son sugerencias — son cosas que ya forman parte de ti o que ya has probado.</div>
+    </div>
+
+    <div class="card sage-border">
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Seguir buscando trabajo — mantener el movimiento</span>
+        <span class="signal-action">Actuar</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Hablar con tu hermano o Gilianni cuando lo mencionan</span>
+        <span class="signal-action">Conectar</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Hacer actividad física — mover el cuerpo</span>
+        <span class="signal-action">Mover</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Cuidar la rutina de sueño</span>
+        <span class="signal-action">Cuidar</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Hablar con la familia para sentirte acompañada</span>
+        <span class="signal-action">Anclar</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Asistir a las sesiones de terapia</span>
+        <span class="signal-action">Sostener</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--sage);"></div>
+        <span class="signal-text">Reconectar con tu propósito de estar en Madrid</span>
+        <span class="signal-action">Elegir</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Lo que sabes que complica las cosas</div>
+    </div>
+    <div class="card accent-border">
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--accent);"></div>
+        <span class="signal-text">Hablar con personas que también están en angustia por el trabajo</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--accent);"></div>
+        <span class="signal-text">Dejar de moverse — el cuerpo quieto amplifica el malestar</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--accent);"></div>
+        <span class="signal-text">Hablar con los papás solo de lo que te preocupa</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--accent);"></div>
+        <span class="signal-text">Quedarse dando vueltas al pensamiento en vez de hacer algo</span>
+      </div>
+      <div class="signal-row">
+        <div class="signal-dot" style="background:var(--accent);"></div>
+        <span class="signal-text">Descuidar la rutina de noche y las comidas</span>
+      </div>
+    </div>
+
+    <button class="btn-back" onclick="show('s-tools')">← Volver</button>
+  </div>
+
+  <!-- ═══════ S-VALORES ═══════ -->
+  <div class="screen" id="s-valores">
+    <div class="section-title">Tu brújula</div>
+    <div class="section-sub">Cuando no sabes qué hacer, vuelve acá. No lo que deberías querer — lo que de verdad importa para ti.</div>
+
+    <div class="values-wrap">
+      <span class="value-chip">Independencia</span>
+      <span class="value-chip">Tranquilidad</span>
+      <span class="value-chip">Autonomía</span>
+      <span class="value-chip">Honestidad en los vínculos</span>
+      <span class="value-chip">Libertad de elegir</span>
+      <span class="value-chip">Conexión familiar</span>
+      <span class="value-chip">Cuidarme a mí misma</span>
+      <span class="value-chip">Presencia</span>
+      <span class="value-chip">Apertura a la experiencia</span>
+    </div>
+
+    <div class="card accent-border">
+      <div class="card-title">La pregunta de los valores</div>
+      <div class="card-body">
+        <p>Antes de actuar o antes de evitar algo, puedes preguntarte:</p>
+        <p style="margin-top:10px; font-style:italic; color:var(--accent);">¿Esto que estoy a punto de hacer o de evitar — viene de mis valores, o viene del miedo?</p>
+        <p style="margin-top:10px;">No hay respuesta perfecta. Solo más claridad.</p>
+      </div>
+    </div>
+
+    <div class="frase">Estar en Madrid puede venir del miedo a volver, o puede venir de la elección de construir algo tuyo. Las dos son reales. La segunda es la que te mueve hacia adelante.</div>
+
+    <button class="btn-back" onclick="show('s1')">← Volver al inicio</button>
+  </div>
+
+  <!-- ═══════ S-DIARIO ═══════ -->
+  <div class="screen" id="s-diario">
+    <div class="section-title">Mi registro</div>
+    <div class="section-sub">Para ti sola. O para llevar a la próxima sesión.</div>
+
+    <div class="diario-wrap">
+      <div class="field-label">¿Qué quieres registrar?</div>
+      <textarea id="diario-texto" placeholder="Escribe lo que sientes, lo que pasó, algo que notaste hoy, o algo que quieras recordar para sesión..."></textarea>
+      <select id="diario-cat">
+        <option value="Cómo lo manejé">✓ Cómo lo manejé</option>
+        <option value="Pensamiento que llegó">◎ Pensamiento que llegó</option>
+        <option value="Algo que me costó">⚡ Algo que me costó</option>
+        <option value="Algo que funcionó">▷ Algo que funcionó</option>
+        <option value="Para hablar en sesión">◇ Para hablar en sesión</option>
+        <option value="Momento de gentileza">💙 Momento de gentileza conmigo</option>
+      </select>
+      <button class="btn-forward" style="margin-top:14px;" onclick="guardar()">Guardar</button>
+    </div>
+
+    <div id="diario-lista"></div>
+
+    <button class="btn-back" onclick="show('s1')">← Volver al inicio</button>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+  // ── NAVIGATION ──
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 's2') startBreath();
+    if (id === 's-diario') renderDiario();
+  }
+
+  // ── BREATHING ──
+  let breathTimer = null;
+  function startBreath() {
+    clearTimeout(breathTimer);
+    const ring  = document.getElementById('bc');
+    const lbl   = document.getElementById('bl');
+    const inst  = document.getElementById('bi');
+    const co    = document.getElementById('bco');
+    const phases = [
+      { label: 'Inhala',  instr: 'Sigue el ritmo. Inhala durante 4 segundos.',  expand: true,  ms: 4000 },
+      { label: 'Sostén',  instr: 'Sostén el aire. 4 segundos.',                 expand: true,  ms: 4000 },
+      { label: 'Exhala',  instr: 'Exhala lentamente. 6 segundos.',              expand: false, ms: 6000 },
+    ];
+    let breath = 0, phase = 0;
+    ring.textContent = 'inhala';
+    function next() {
+      if (breath >= 4) {
+        co.textContent = 'listo ✓';
+        lbl.textContent = 'Bien hecho';
+        inst.textContent = 'Tómate un momento. El volante es tuyo.';
+        ring.textContent = '✓';
+        return;
+      }
+      const p = phases[phase];
+      lbl.textContent  = p.label;
+      inst.textContent = p.instr;
+      ring.classList.toggle('expand', p.expand);
+      ring.textContent = p.label.toLowerCase();
+      co.textContent   = 'respiración ' + (breath + 1) + ' de 4';
+      breathTimer = setTimeout(() => {
+        phase++;
+        if (phase >= phases.length) { phase = 0; breath++; }
+        next();
+      }, p.ms);
+    }
+    next();
+  }
+
+  // ── CHECKLIST ──
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+  }
+
+  // ── DIARIO ──
+  function getEntradas() {
+    try { return JSON.parse(localStorage.getItem('mc_diario') || '[]'); } catch(e) { return []; }
+  }
+  function saveEntradas(arr) {
+    try { localStorage.setItem('mc_diario', JSON.stringify(arr)); } catch(e) {}
+  }
+  function guardar() {
+    const texto = document.getElementById('diario-texto').value.trim();
+    if (!texto) return;
+    const cat = document.getElementById('diario-cat').value;
+    const entradas = getEntradas();
+    const now = new Date();
+    const fecha = now.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' })
+                + ' · ' + now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    entradas.unshift({ texto, cat, fecha, id: Date.now() });
+    saveEntradas(entradas);
+    document.getElementById('diario-texto').value = '';
+    renderDiario();
+  }
+  function borrar(id) {
+    saveEntradas(getEntradas().filter(e => e.id !== id));
+    renderDiario();
+  }
+  function renderDiario() {
+    const lista    = document.getElementById('diario-lista');
+    const entradas = getEntradas();
+    if (!entradas.length) {
+      lista.innerHTML = '<div class="empty-state">Todavía no hay registros.<br>Lo que escribas aquí solo lo ves tú.</div>';
+      return;
+    }
+    lista.innerHTML = entradas.map(e => `
+      <div class="diario-entry">
+        <div class="entry-meta">
+          <span class="entry-date">${e.fecha}</span>
+          <span style="display:flex;align-items:center;gap:8px;">
+            <span class="entry-tag">${e.cat}</span>
+            <button class="entry-delete" onclick="borrar(${e.id})">×</button>
+          </span>
+        </div>
+        <div class="entry-text">${e.texto.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div>
+      </div>
+    `).join('');
+  }
+</script>
+</body>
+</html>
